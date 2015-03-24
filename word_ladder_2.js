@@ -37,7 +37,9 @@ var findLadders = function(start, end, dict) {
         [start]
     ];
     var shouldBreak = false;
+    var totalMatchCount;
     while(!shouldBreak){
+        totalMatchCount = 0;
         paths.forEach(function(path){
             var nMatched = 0;
             word = path.slice(-1)[0];
@@ -45,13 +47,17 @@ var findLadders = function(start, end, dict) {
                 path.push(end);
                 shouldBreak = true;
             }else{
+                var filteredDict = [];
+                dict.slice(0).forEach(function(wordInDict){
+                    if (path.slice(1).indexOf(wordInDict) < 0){
+                        filteredDict.push(wordInDict);
+                    }
+                });
 
-                dict.filter(function(wordInDict){
-
-                    return path.slice(1).indexOf(wordInDict) < 0;
-                }).forEach(function(wordInDict){
+                filteredDict.forEach(function(wordInDict){
                     if (match(wordInDict, word)){
                         nMatched++;
+                        totalMatchCount++;
                         if (nMatched < 2){
                             path.push(wordInDict);
                         }else{
@@ -64,6 +70,9 @@ var findLadders = function(start, end, dict) {
                 });
             }
         });
+        if (!totalMatchCount){
+            shouldBreak = true;
+        }
     }
 
     return paths.filter(function(path){
@@ -73,13 +82,13 @@ var findLadders = function(start, end, dict) {
     });
 };
 
-// var start = 'hit';
-// var end = 'cog';
-// var dict = ['hot','dot','dog','lot','log'];
+var start = 'hit';
+var end = 'cog';
+var dict = ['hot','dot','dog','lot','log'];
 // var start = 'hot';
 // var end = 'dog';
 // var dict = ['hot', 'dog'];
-var start = 'hit';
-var end = 'cog';
-var dict = ['hot','dot','dog','lot','log','dof','mit','sit','set','mog','mig','seg','nax','max'];
+// var start = 'hit';
+// var end = 'cog';
+// var dict = ['hot','dot','dog','lot','log','dof','mit','sit','set','mog','mig','seg','nax','max'];
 console.log(findLadders(start, end, dict));
