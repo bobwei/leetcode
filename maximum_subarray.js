@@ -1,22 +1,30 @@
 'use strict';
 
-var maxSubarray = function(nums) {
+var maxSubArray = function(nums) {
   var output = {};
-  var maxValue = 0;
+  var maxValue;
 
-  output['0'] = Math.max(nums[0], 0);
-  maxValue = Math.max(maxValue, output[0]);
+  output['0'] = nums[0];
+  maxValue = output['0'];
 
   for ( var i = 1 ; i < nums.length ; i++ ){
-    output[i] = Math.max(output[i-1] + nums[i], 0);
+    var previousValue = output[i-1];
+    if (previousValue < 0){
+      previousValue = 0;
+    }
+    output[i] = previousValue + nums[i];
     maxValue = Math.max(maxValue, output[i]);
   }
 
   return maxValue;
 };
 
-var input = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
-console.log(maxSubarray(input));
+var input;
+input = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+console.log(maxSubArray(input));
 
-var input = [1];
-console.log(maxSubarray(input));
+input = [1];
+console.log(maxSubArray(input));
+
+input = [-1];
+console.log(maxSubArray(input));
