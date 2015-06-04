@@ -1,3 +1,5 @@
+'use strict';
+
 // [1, 2, 3], 0, 2
 var reverse = function(nums, i, j){
     if (j < nums.length){

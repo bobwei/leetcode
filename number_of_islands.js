@@ -1,7 +1,4 @@
-/**
- * @param {character[][]} grid
- * @return {number}
- */
+'use strict';
 
 var numIslands = function(grid) {
     var n = grid.length;

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @param {number} m
  * @param {number} n

@@ -1,4 +1,5 @@
 'use strict';
+
 /**
 * @param {string} start
 * @param {string} end

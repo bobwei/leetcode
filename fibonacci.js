@@ -1,3 +1,5 @@
+'use strict';
+
 var fibonacci = function(n){
     var results = {
         '1': 1,

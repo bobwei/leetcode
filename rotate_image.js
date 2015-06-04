@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @param {number[][]} matrix
  * @return {void} Do not return anything, modify matrix in-place instead.
@@ -44,5 +46,5 @@ var genMatrix = function(n){
 
 var matrix = genMatrix(4);
 console.log(matrix);
-rotate(matrix)
+rotate(matrix);
 console.log(matrix);
