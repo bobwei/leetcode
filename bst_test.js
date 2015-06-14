@@ -12,5 +12,5 @@ console.log('root.bfs()');
 root.bfs();
 
 console.log('root.bfs()');
-root.delete(12);
+root.delete(5);
 root.bfs();
