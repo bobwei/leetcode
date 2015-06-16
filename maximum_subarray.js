@@ -1,22 +1,18 @@
 'use strict';
 
 var maxSubArray = function(nums) {
-  var output = {};
-  var maxValue;
-
-  output['0'] = nums[0];
-  maxValue = output['0'];
-
-  for ( var i = 1 ; i < nums.length ; i++ ){
-    var previousValue = output[i-1];
-    if (previousValue < 0){
-      previousValue = 0;
-    }
-    output[i] = previousValue + nums[i];
-    maxValue = Math.max(maxValue, output[i]);
+  var max = - Infinity;
+  var output = {
+    '-1': 0
+  };
+  for ( var i = 0 ; i < nums.length ; i++){
+    output[i] = Math.max(
+      nums[i],
+      output[i - 1] + nums[i]
+    );
+    max = Math.max(max, output[i]);
   }
-
-  return maxValue;
+  return max;
 };
 
 var input;
