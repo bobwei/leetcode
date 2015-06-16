@@ -44,6 +44,14 @@ TreeNode.prototype.findMin = function(){
   };
 };
 
+TreeNode.prototype.findDepth = function(){
+  if (!this.left && !this.right){
+    return 0;
+  }
+
+  return Math.max(this.left.findDepth(), this.right.findDepth()) + 1;
+};
+
 TreeNode.prototype.delete = function(val){
   var parent;
   var current = this;
