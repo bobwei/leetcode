@@ -44,4 +44,3 @@ nodes.forEach(function(node){
   node.bfs();
   console.log('--');
 });
-console.log();
