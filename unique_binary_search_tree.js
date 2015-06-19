@@ -14,4 +14,4 @@ var numTrees = function(n){
   return output[n];
 };
 
-console.log(numTrees(0));
+console.log(numTrees(4));
