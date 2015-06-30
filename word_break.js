@@ -1,5 +1,21 @@
 'use strict';
 
+/*
+
+    n
+01234567
+leetcode
+   i
+
+f(n) = f(i) && s.slice(i, n), i from 0 to n - 1
+
+f(4) = f(0) && s.slice(0, 4) ||
+       f(1) && s.slice(1, 4) ||
+       f(2) && s.slice(2, 4) ||
+       f(3) && s.slice(3, 4)
+
+*/
+
 var wordBreak = function(s, wordDict){
   var output = {
     '0': true
