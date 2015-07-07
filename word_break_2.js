@@ -25,17 +25,17 @@ var wordBreak = function(s, wordDict) {
   };
   for ( var n = 1 ; n < s.length + 1 ; n++ ){
     output[n] = [];
-    for ( var i = 0 ; i < n ; i++ ){
-      if (wordDict.has(s.substring(i, n))){
-        output[i].forEach(function(obj){
+    wordDict.forEach(function(word){
+      if (word.length <= n && s.slice(n - word.length, n) === word){
+        output[n - word.length].forEach(function(obj){
           output[n].push(
             obj.concat(
-              [s.substring(i, n)]
+              [word]
             )
           );
         });
       }
-    }
+    });
   }
   return output[s.length].map(function(obj){
     return obj.join(' ');
@@ -49,6 +49,6 @@ dict = new Set(['cat', 'cats', 'and', 'sand', 'dog']);
 s = 'catsanddog';
 console.log(wordBreak(s, dict));
 
-dict = new Set(['a','aa','aaa','aaaa','aaaaa','aaaaaa','aaaaaaa','aaaaaaaa','aaaaaaaaa','aaaaaaaaaa']);
-s = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab';
-console.log(wordBreak(s, dict));
+// dict = new Set(['a','aa','aaa','aaaa','aaaaa','aaaaaa','aaaaaaa','aaaaaaaa','aaaaaaaaa','aaaaaaaaaa']);
+// s = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab';
+// console.log(wordBreak(s, dict));
