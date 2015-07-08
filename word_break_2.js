@@ -58,7 +58,9 @@ var wordBreak = function(s, wordDict) {
       });
   }
   return output.map(function(positions){
-    positions.sort();
+    positions.sort(function(a, b){
+      return a - b;
+    });
     return positions
       .map(function(position, i){
         return s.slice(position, positions[i + 1]);
