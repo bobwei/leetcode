@@ -31,9 +31,4 @@ var rootNode = new TreeNode(data.shift());
 data.forEach(function(obj){
   rootNode.insert(obj);
 });
-// console.log('bfs');
-// rootNode.bfs();
-// console.log('dfs');
-// rootNode.dfs();
-// console.log('isBalanced');
 console.log(isBalanced(rootNode));
