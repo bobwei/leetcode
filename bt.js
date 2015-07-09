@@ -52,6 +52,23 @@ TreeNode.prototype.bfs = function(){
   }
 };
 
+TreeNode.prototype.clearNull = function(){
+  var stack = [this];
+  while (stack.length){
+    var current = stack.pop();
+    if (current.right === null || current.right.val === null){
+      current.right = null;
+    }else{
+      stack.push(current.right);
+    }
+    if (current.left === null || current.left.val === null){
+      current.left = null;
+    }else{
+      stack.push(current.left);
+    }
+  }
+};
+
 var TreeNodeTest = function(){
   var data = [3, 1, 6, 4, 7, 5];
   var root = new TreeNode(data.shift());
