@@ -2,7 +2,9 @@
 
 var HeapModule = require('./heap');
 var Heap = HeapModule.Heap;
-var heap = new Heap();
+var heap = new Heap(function(a, b){
+  return a < b;
+});
 var data = [
   [1, 'Bob'],
   [2, 'Helen'],

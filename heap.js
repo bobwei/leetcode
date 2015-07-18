@@ -24,51 +24,32 @@ Heap.prototype.insert = function(key, item){
 };
 
 Heap.prototype.bubbleUp = function(index){
-  // convert to 1-based index
-  var _index = index + 1;
-  var _parentIndex = Math.floor(_index / 2);
-
-  while (
-    _index > 1 &&
-    !this.compareFunc(
-      this.data[_parentIndex - 1].key,
-      this.data[_index - 1].key
-    )
-  ){
-    this.swap(_index - 1, _parentIndex - 1);
-    _index = Math.floor(_index / 2);
-    _parentIndex = Math.floor(_index / 2);
+  if (index <= 0 ){
+    return;
+  }
+  var parent = (index % 2 === 1) ? (index - 1) / 2 : (index - 2) / 2 ;
+  if (!this.compareFunc(this.data[parent].key, this.data[index].key)){
+    this.swap(parent, index);
+    this.bubbleUp(parent);
   }
 };
 
 Heap.prototype.sinkDown = function(index){
-  var _index = index + 1;
-  var _leftIndex;
-  var _rightIndex;
-  var _toSwapIndex;
-
-  do{
-    _leftIndex = 2 * _index;
-    _rightIndex = _leftIndex + 1;
-    if (_leftIndex < this.data.length &&
-        !this.compareFunc(
-          this.data[_index - 1].key,
-          this.data[_leftIndex - 1].key
-        )){
-      _toSwapIndex = _leftIndex;
-    }
-    if (_rightIndex < this.data.length &&
-        !this.compareFunc(
-          this.data[_toSwapIndex - 1].key,
-          this.data[_rightIndex - 1].key
-        )){
-      _toSwapIndex = _rightIndex;
-    }
-    if (_toSwapIndex){
-      this.swap(_index - 1, _toSwapIndex - 1);
-    }
-    _index = _toSwapIndex;
-  }while(_index !== _toSwapIndex);
+  var toSwapIndex = index;
+  var left = 2 * index + 1;
+  var right = left + 1;
+  if (left < this.data.length &&
+      !this.compareFunc(this.data[index].key, this.data[left].key)){
+    toSwapIndex = left;
+  }
+  if (right < this.data.length &&
+      !this.compareFunc(this.data[toSwapIndex].key, this.data[right].key)){
+    toSwapIndex = right;
+  }
+  if (toSwapIndex !== index){
+    this.swap(index, toSwapIndex);
+    this.sinkDown(toSwapIndex);
+  }
 };
 
 Heap.prototype.pop = function(){
