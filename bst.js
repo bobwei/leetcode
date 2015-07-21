@@ -117,9 +117,11 @@ TreeNode.prototype.dfs = function(){
     if (node.left){
       stack.push(node.left);
     }
-    output.push(node.val);
+    output.push(node);
   }
-  return output;
+  return output.map(function(node){
+    return node.val;
+  });
 };
 
 TreeNode.prototype.bfs = function(){
@@ -133,9 +135,11 @@ TreeNode.prototype.bfs = function(){
     if (node.right){
       queue.push(node.right);
     }
-    output.push(node.val);
+    output.push(node);
   }
-  return output;
+  return output.map(function(node){
+    return node.val;
+  });
 };
 
 TreeNode.prototype.inOrder = function(){
