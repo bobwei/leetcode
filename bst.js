@@ -107,6 +107,7 @@ TreeNode.prototype.delete = function(val){
 };
 
 TreeNode.prototype.dfs = function(){
+  var output = [];
   var stack = [this];
   while (stack.length){
     var node = stack.pop();
@@ -116,11 +117,13 @@ TreeNode.prototype.dfs = function(){
     if (node.left){
       stack.push(node.left);
     }
-    console.log(node.val);
+    output.push(node.val);
   }
+  return output;
 };
 
 TreeNode.prototype.bfs = function(){
+  var output = [];
   var queue = [this];
   while (queue.length){
     var node = queue.shift();
@@ -130,8 +133,30 @@ TreeNode.prototype.bfs = function(){
     if (node.right){
       queue.push(node.right);
     }
-    console.log(node.val);
+    output.push(node.val);
   }
+  return output;
+};
+
+TreeNode.prototype.inOrder = function(){
+  var output = [];
+  var stack = [];
+  var current = this;
+  while (current || stack.length){
+    if (current){
+      stack.push(current);
+      current = current.left;
+    }else{
+      var node = stack.pop();
+      output.push(node);
+      if (node.right){
+        current = node.right;
+      }
+    }
+  }
+  return output.map(function(node){
+    return node.val;
+  });
 };
 
 var TreeNodeTest = function(){
