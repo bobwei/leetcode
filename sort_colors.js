@@ -6,37 +6,22 @@ var swap = function(arr, i, j){
   arr[j] = tmp;
 };
 
-var sortColors = function(nums) {
-  var j;
-  var k;
-  nums.forEach(function(num, n){
-    if (num === 0){
-      if (j !== undefined){
-        swap(nums, n, j);
-        j += 1;
-      }
-      if (k !== undefined){
-        swap(nums, n, k);
-        k += 1;
-      }
-    }else if (num === 1){
-      if (k !== undefined){
-        swap(nums, n, k);
-        k += 1;
-      }
-      if (j === undefined){
-        if (k === undefined){
-          j = n;
-        }else{
-          j = k - 1;
-        }
-      }
-    }else if (num === 2){
-      if (k === undefined){
-        k = n;
-      }
+var sortColors = function(nums){
+  var i = 0;
+  var j = 0;
+  var k = nums.length - 1;
+  while (i <= k){
+    if (nums[i] === 0){
+      swap(nums, i, j);
+      i += 1;
+      j += 1;
+    }else if (nums[i] === 1){
+      i += 1;
+    }else if (nums[i] === 2){
+      swap(nums, i, k);
+      k -= 1;
     }
-  });
+  }
 };
 
 var data;
