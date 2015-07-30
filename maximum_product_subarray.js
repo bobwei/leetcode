@@ -17,7 +17,6 @@ var maxProduct = function(nums) {
     );
     max = Math.max(max, f_max[i]);
   }
-  console.log(f_max, f_min);
   return max;
 };
 
