@@ -1,8 +1,16 @@
 'use strict';
 
 var TreeNode = function(val){
-  this.val = val;
   this.left = this.right = null;
+  if (val instanceof Array){
+    this.val = val.shift();
+    var that = this;
+    val.forEach(function(obj){
+      that.insert(obj);
+    });
+  }else{
+    this.val = val;
+  }
 };
 
 TreeNode.prototype.insert = function(val){
