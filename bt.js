@@ -1,8 +1,16 @@
 'use strict';
 
 var TreeNode = function(val){
-  this.val = val;
   this.left = this.right = null;
+  if (val instanceof Array){
+    this.val = val.shift();
+    var that = this;
+    val.forEach(function(obj){
+      that.insert(obj);
+    });
+  }else{
+    this.val = val;
+  }
 };
 
 TreeNode.prototype.insert = function(val){
@@ -25,6 +33,7 @@ TreeNode.prototype.insert = function(val){
 };
 
 TreeNode.prototype.dfs = function(){
+  var output = [];
   var stack = [this];
   while (stack.length){
     var node = stack.pop();
@@ -34,11 +43,13 @@ TreeNode.prototype.dfs = function(){
     if (node.left){
       stack.push(node.left);
     }
-    console.log(node.val);
+    output.push(node.val);
   }
+  return output;
 };
 
 TreeNode.prototype.bfs = function(){
+  var output = [];
   var queue = [this];
   while (queue.length){
     var node = queue.shift();
@@ -48,8 +59,9 @@ TreeNode.prototype.bfs = function(){
     if (node.right){
       queue.push(node.right);
     }
-    console.log(node.val);
+    output.push(node.val);
   }
+  return output;
 };
 
 TreeNode.prototype.clearNull = function(){
@@ -67,6 +79,31 @@ TreeNode.prototype.clearNull = function(){
       stack.push(current.left);
     }
   }
+};
+
+TreeNode.prototype.height = function(){
+  var height = 0;
+  var queue = [{
+    height: 0,
+    node: this
+  }];
+  while (queue.length){
+    var current = queue.shift();
+    if (current.node.left){
+      queue.push({
+        height: current.height + 1,
+        node: current.node.left
+      });
+    }
+    if (current.node.right){
+      queue.push({
+        height: current.height + 1,
+        node: current.node.right
+      });
+    }
+    height = Math.max(height, current.height);
+  }
+  return height;
 };
 
 var TreeNodeTest = function(){
