@@ -8,6 +8,7 @@ var TreeNode = function(val){
     val.forEach(function(obj){
       that.insert(obj);
     });
+    this.clearNull();
   }else{
     this.val = val;
   }
@@ -60,6 +61,43 @@ TreeNode.prototype.bfs = function(){
       queue.push(node.right);
     }
     output.push(node.val);
+  }
+  return output;
+};
+
+TreeNode.prototype.preOrder = function(){
+  var current = this;
+  var stack = [];
+  var output = [];
+  while (current || stack.length){
+    if (current){
+      output.push(current.val);
+      if (current.right){
+        stack.push(current.right);
+      }
+      current = current.left;
+    }else{
+      current = stack.pop();
+    }
+  }
+  return output;
+};
+
+TreeNode.prototype.inOrder = function(){
+  var current = this;
+  var stack = [];
+  var output = [];
+  while (current || stack.length){
+    if (current){
+      stack.push(current);
+      current = current.left;
+    }else{
+      var node = stack.pop();
+      output.push(node.val);
+      if (node.right){
+        current = node.right;
+      }
+    }
   }
   return output;
 };
