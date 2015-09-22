@@ -102,6 +102,18 @@ TreeNode.prototype.inOrder = function(){
   return output;
 };
 
+TreeNode.prototype.postOrder = function(){
+  var left = [];
+  if (this.left){
+    left = left.concat(this.left.postOrder());
+  }
+  var right = [];
+  if (this.right){
+    right = right.concat(this.right.postOrder());
+  }
+  return left.concat(right).concat([this.val]);
+};
+
 TreeNode.prototype.clearNull = function(){
   var stack = [this];
   while (stack.length){
