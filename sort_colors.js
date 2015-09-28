@@ -12,6 +12,7 @@ var sortColors = function(nums){
   var k = nums.length - 1;
   while (i <= k){
     if (nums[i] === 0){
+      // swap 0's with the starting of 1's
       swap(nums, i, j);
       i += 1;
       j += 1;
@@ -24,10 +25,11 @@ var sortColors = function(nums){
   }
 };
 
+
 var data;
 
-data = [0, 2, 1, 0, 0, 2, 1, 2, 2];
-sortColors(data);
+data = [0, 2, 1, 1, 2, 0, 1];
+sortColors(data)
 console.log(data);
 
 data = [2, 0];
