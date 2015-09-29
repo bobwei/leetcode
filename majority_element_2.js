@@ -1,3 +1,9 @@
+/*
+
+Reference: http://blog.csdn.net/chfe007/article/details/42919017
+
+ */
+
 'use strict';
 
 var majorityElement = function(nums) {
