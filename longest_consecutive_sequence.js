@@ -5,10 +5,12 @@ var longestConsecutive = function(nums) {
   var max = 0;
   nums.forEach(function(num, i){
     if (numsSet.has(num)){
+      // find the starting point of the sequence
       var startingPoint = nums[i];
       while (numsSet.has(startingPoint - 1)){
         startingPoint -= 1;
       }
+      // start counting from the counting point
       var count = 1;
       while (numsSet.has(startingPoint + 1)){
         startingPoint += 1;
