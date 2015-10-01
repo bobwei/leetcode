@@ -7,7 +7,7 @@ var hasCycle = function(head) {
   var p1 = head.next;
   var p2 = head.next.next;
   while (p1.next && p2.next && p2.next.next){
-    if (p1.val === p2.val){
+    if (p1 === p2){
       return true;
     }
     p1 = p1.next;
