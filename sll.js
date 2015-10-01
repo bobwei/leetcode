@@ -3,6 +3,7 @@
 var ListNode = function(val){
   if (val instanceof Array){
     this.val = val.shift();
+    this.next = null;
     var that = this;
     val.forEach(function(obj){
       that.insert(obj);
