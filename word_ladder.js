@@ -1,21 +1,18 @@
 'use strict';
 
-var getWordListGraph = function(wordList){
-  var graph = {};
-  wordList.forEach(function(word){
-    graph[word] = [];
-    for ( var i = 0 ; i < word.length ; i++ ){
-      var newWordSplit = word.split('');
-      for ( var j = 0 ; j < 26 ; j++ ){
-        newWordSplit[i] = String.fromCharCode(97 + j);
-        var newWord = newWordSplit.join('');
-        if (wordList.has(newWord) && newWord !== word){
-          graph[word].push(newWord);
-        }
+var getNeighbors = function(word, wordList){
+  var neighbors = [];
+  for ( var i = 0 ; i < word.length ; i++ ){
+    var newWordSplit = word.split('');
+    for ( var j = 0 ; j < 26 ; j++ ){
+      newWordSplit[i] = String.fromCharCode(97 + j);
+      var newWord = newWordSplit.join('');
+      if (wordList.has(newWord) && newWord !== word){
+        neighbors.push(newWord);
       }
     }
-  });
-  return graph;
+  }
+  return neighbors;
 };
 
 var ladderLength = function(beginWord, endWord, wordDict){
@@ -23,7 +20,6 @@ var ladderLength = function(beginWord, endWord, wordDict){
   wordDict.forEach(function(word){
     wordList.add(word);
   });
-  var graph = getWordListGraph(wordList);
   var result = {};
   wordList.forEach(function(word){
     result[word] = Infinity;
@@ -32,7 +28,8 @@ var ladderLength = function(beginWord, endWord, wordDict){
   var queue = [endWord];
   while (queue.length){
     var current = queue.shift();
-    graph[current].forEach(function(word){
+    var neighbors = getNeighbors(current, wordList);
+    neighbors.forEach(function(word){
       if (result[current] + 1 < result[word]){
         queue.push(word);
         result[word] = result[current] + 1;
