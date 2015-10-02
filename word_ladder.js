@@ -29,12 +29,12 @@ var ladderLength = function(beginWord, endWord, wordDict){
     result[word] = Infinity;
   });
   result[endWord] = 0;
-  var stack = [endWord];
-  while (stack.length){
-    var current = stack.pop();
+  var queue = [endWord];
+  while (queue.length){
+    var current = queue.shift();
     graph[current].forEach(function(word){
       if (result[current] + 1 < result[word]){
-        stack.push(word);
+        queue.push(word);
         result[word] = result[current] + 1;
       }
     });
