@@ -1,69 +1,49 @@
-/*jshint loopfunc: true */
-
 'use strict';
 
-var isMatched = function(word1, word2){
-  var diffCount = 0;
-  for ( var i = 0 ; i < word1.length ; i++ ){
-    if (word1[i] !== word2[i]){
-      diffCount++;
-      if (diffCount > 1){
-        return false;
+var getWordListGraph = function(wordList){
+  var graph = {};
+  wordList.forEach(function(word){
+    graph[word] = [];
+    for ( var i = 0 ; i < word.length ; i++ ){
+      var newWordSplit = word.split('');
+      for ( var j = 0 ; j < 26 ; j++ ){
+        newWordSplit[i] = String.fromCharCode(97 + j);
+        var newWord = newWordSplit.join('');
+        if (wordList.has(newWord) && newWord !== word){
+          graph[word].push(newWord);
+        }
       }
     }
-  }
-  return true;
+  });
+  return graph;
 };
 
 var ladderLength = function(beginWord, endWord, wordDict){
-  var dict = [];
-  wordDict.forEach(function(key){
-    dict.push(key);
+  var wordList = new Set([beginWord, endWord]);
+  wordDict.forEach(function(word){
+    wordList.add(word);
   });
-  var distances = {};
-  // var graph = {};
-  dict.forEach(function(key){
-    distances[key] = Infinity;
-    // graph[key] = [];
+  var graph = getWordListGraph(wordList);
+  var result = {};
+  wordList.forEach(function(word){
+    result[word] = Infinity;
   });
-  distances[endWord] = 0;
-
-  var queue = [endWord];
-  while (queue.length){
-    var current = queue.shift();
-    // for all adjacent nodes
-    dict
-      .filter(function(key){
-        return isMatched(key, current) && key !== current;
-      })
-      .forEach(function(key){
-        var distance = distances[current] + 1;
-        if (distance <= distances[key]){
-          distances[key] = distance;
-          // graph[key].push(current);
-          queue.push(key);
-        }
-      });
-  }
-
-  var matchedKeys = dict
-    .filter(function(key){
-      return isMatched(beginWord, key);
+  result[endWord] = 0;
+  var stack = [endWord];
+  while (stack.length){
+    var current = stack.pop();
+    graph[current].forEach(function(word){
+      if (result[current] + 1 < result[word]){
+        stack.push(word);
+        result[word] = result[current] + 1;
+      }
     });
-
-  if (!matchedKeys.length){
-    return 0;
   }
-
-  return Math.min.apply(
-    null,
-    matchedKeys
-      .map(function(key){
-        return distances[key];
-      })
-    ) + 2;
+  if (result[beginWord] < Infinity){
+    return result[beginWord] + 1;
+  }
+  return 0;
 };
-
 
 var beginWord;
 var endWord;
@@ -71,12 +51,7 @@ var wordDict;
 
 beginWord = 'hit';
 endWord = 'cog';
-wordDict = new Set(['hot','dot','dog','lot','log']);
-console.log(ladderLength(beginWord, endWord, wordDict));
-
-beginWord = 'a';
-endWord = 'c';
-wordDict = new Set(['a', 'b', 'c']);
+wordDict = new Set(['hot', 'dot', 'dog', 'lot', 'log']);
 console.log(ladderLength(beginWord, endWord, wordDict));
 
 beginWord = 'sand';
