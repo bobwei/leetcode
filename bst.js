@@ -35,21 +35,12 @@ TreeNode.prototype.insert = function(val){
   }
 };
 
-TreeNode.prototype.findMin = function(){
-  var parent;
+TreeNode.prototype.findMinNode = function(){
   var current = this;
-  while (true){
-    if (current.left){
-      parent = current;
-      current = current.left;
-    }else{
-      break;
-    }
+  while (current.left){
+    current = current.left;
   }
-  return {
-    current: current,
-    parent: parent
-  };
+  return current;
 };
 
 TreeNode.prototype.findDepth = function(){
@@ -61,57 +52,50 @@ TreeNode.prototype.findDepth = function(){
 };
 
 TreeNode.prototype.delete = function(val){
+  var rootNode = this;
   var parent;
   var current = this;
-  var isFound = false;
   while (true){
-    if (val < current.val){
+    if (!current){
+      return rootNode;
+    }
+    if (val === current.val){
+      break;
+    }else if (val < current.val){
       parent = current;
       current = current.left;
     }else if (val > current.val){
       parent = current;
       current = current.right;
-    }else{
-      isFound = true;
-      break;
     }
   }
-  if (isFound){
-    // leaf
-    if (current.left === null && current.right === null){
-      if (current.val < parent.val){
-        parent.left = null;
-      }else if (current.val > parent.val){
-        parent.right = null;
-      }
-    // with only one child
-    }else if (current.left === null || current.right === null){
-      if (current.val < parent.val){
-        if (current.left){
-          parent.left = current.left;
-        }else if (current.right){
-          parent.left = current.right;
-        }
-      }else if (current.val > parent.val){
-        if (current.left){
-          parent.right = current.left;
-        }else if (current.right){
-          parent.right = current.right;
-        }
-      }
-    // with two children
-    }else{
-      var result = current.right.findMin();
-      var minCurrent = result.current;
-      var minParent = result.parent;
-      current.val = minCurrent.val;
-      if (minCurrent.val < minParent.val){
-        minParent.left = null;
-      }else if (minCurrent.val > minParent.val){
-        minParent.right = null;
-      }
+  // leaf
+  if (current.left === null && current.right === null){
+    if (!parent){
+      rootNode = current.left || current.right;
+    }else if (current.val < parent.val){
+      parent.left = null;
+    }else if (current.val > parent.val){
+      parent.right = null;
     }
+
+  // one child
+  }else if (current.left === null || current.right === null){
+    if (!parent){
+      rootNode = current.left || current.right;
+    }else if (current.val < parent.val){
+      parent.left = current.left || current.right;
+    }else if (current.val > parent.val){
+      parent.right = current.left || current.right;
+    }
+
+  // two children
+  }else{
+    var minNode = current.right.findMinNode();
+    current.val = minNode.val;
+    current.right = current.right.delete(minNode.val);
   }
+  return rootNode;
 };
 
 TreeNode.prototype.dfs = function(){
